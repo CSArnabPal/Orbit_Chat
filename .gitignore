@@ -1,0 +1,28 @@
+cd ~/Applications/Chat_App
+
+cat > .gitignore <<'EOF'
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Django
+staticfiles/
+media/
+*.log
+
+# React / Node
+node_modules/
+frontend/dist/
+frontend/build/
+
+# Local tooling
+.vscode/
+.idea/
+.DS_Store
+EOF

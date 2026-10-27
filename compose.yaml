@@ -1,0 +1,41 @@
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    networks:
+      - orbit-internal
+
+  backend:
+    build:
+      context: ./backend
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DJANGO_DB_PATH: /app/data/orbit.sqlite3
+      REDIS_URL: redis://redis:6379/0
+      DJANGO_DEBUG: "0"
+    volumes:
+      - orbit-data:/app/data
+    depends_on:
+      - redis
+    networks:
+      - orbit-internal
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      - backend
+    networks:
+      - orbit-internal
+
+networks:
+  orbit-internal:
+
+volumes:
+  orbit-data:
