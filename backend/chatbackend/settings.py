@@ -73,13 +73,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+cors_defaults = 'http://localhost:5173,http://127.0.0.1:5173,https://orbit-chat-frontend-p4zq.onrender.com'
+
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
-    for origin in os.environ.get(
-        'DJANGO_CORS_ALLOWED_ORIGINS',
-        'http://localhost:5173,http://127.0.0.1:5173',
-        "https://orbit-chat-frontend-p4zq.onrender.com",
-    ).split(',')
+    for origin in os.environ.get('DJANGO_CORS_ALLOWED_ORIGINS', cors_defaults).split(',')
     if origin.strip()
 ]
 
