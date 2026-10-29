@@ -63,9 +63,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -73,13 +73,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-cors_defaults = 'http://localhost:5173,http://127.0.0.1:5173,https://orbit-chat-frontend-p4zq.onrender.com'
-
 CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in os.environ.get('DJANGO_CORS_ALLOWED_ORIGINS', cors_defaults).split(',')
-    if origin.strip()
+    "https://orbit-chat-frontend-p4zq.onrender.com",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
+
+# Alternatively, if you want to allow all render subdomains dynamically:
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.onrender\.com$",
+]
+
 
 CORS_ALLOW_CREDENTIALS = True
 
